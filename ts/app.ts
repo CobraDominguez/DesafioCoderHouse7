@@ -2,13 +2,13 @@ import { Application, application, request, response } from "express";
 import express,{Request,Response} from 'express';
 import Archivo from './Archivo';
 
-declare var visitas1: number;
+let visitas1: number = 0;
+let visitas2: number = 0;
 
 const app:Application = express();
 
 app.get("/items", (req:Request,res:Response) => {
     let items = Obteneritems();
-    console.log(visitas1);
     visitas1 ++;
     res.send(items);
 });
@@ -19,6 +19,7 @@ app.get("/item-random", (req:Request,res:Response) => {
     let miobj = {
         "item": productos[Math.floor(Math.random() * productos.length)]
     }
+    visitas2 ++;
     res.send(miobj);
 });
 
@@ -26,11 +27,11 @@ app.get("/visitas", (req:Request,res:Response) => {
     let miobj = {
         "visitas": [{
             "items": "items",
-            "cantidad": 0 //variable visitas1
+            "cantidad": visitas1
         },
         {
             "items": "item-random",
-            "cantidad": 0 //variable visitas2
+            "cantidad": visitas2
         }]
     }
     res.send(miobj);
